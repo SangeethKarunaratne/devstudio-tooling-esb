@@ -168,7 +168,7 @@ public class EsbViewsRepository {
 			public static String valueType = "esb::EndPointProperty::properties::valueType";
 			
 			// Start of user code for valueExpression ElementEditor key
-			public static String valueExpression = "esb::EndPointProperty::properties::valueExpression";
+			public static String valueExpression = "esb::SqlParameterDefinition::properties::valueExpression";
 			// End of user code
 			
 	
@@ -1549,7 +1549,7 @@ public class EsbViewsRepository {
 			public static String propertyValue = "esb::LogProperty::properties::propertyValue";
 			
 			// Start of user code for propertyExpression ElementEditor key
-			public static String propertyExpression = "esb::LogProperty::properties::propertyExpression";
+			public static String propertyExpression = "esb::ClassProperty::properties::propertyExpression";
 			// End of user code
 			
 	
@@ -1855,7 +1855,7 @@ public class EsbViewsRepository {
 			// Start of user code for sessionIdExpression ElementEditor key
 			public static String sessionIdExpression = "esb::EJBMediator::properties::sessionIdExpression";
 			// End of user code
-
+			
 	
 		}
 	
@@ -1910,7 +1910,7 @@ public class EsbViewsRepository {
 			// Start of user code for propertyExpression ElementEditor key
 			public static String propertyExpression = "esb::MethodArgument::properties::propertyExpression";
 			// End of user code
-
+			
 	
 		}
 	
@@ -2098,7 +2098,7 @@ public class EsbViewsRepository {
 			public static String sourceProperty = "esb::EnrichMediator::Source::sourceProperty";
 			
 			// Start of user code for sourceXPath ElementEditor key
-			public static String sourceXPath = "esb::EnrichMediator::source::sourceXPath";
+			public static String sourceXPath = "esb::RuleMediator::source::sourceXPath";
 			// End of user code
 			
 			// Start of user code for inlineRegistryKey ElementEditor key
@@ -2120,7 +2120,7 @@ public class EsbViewsRepository {
 			public static String targetProperty = "esb::EnrichMediator::Target::targetProperty";
 			
 			// Start of user code for targetXPath ElementEditor key
-			public static String targetXPath = "esb::EnrichMediator::target::targetXPath";
+			public static String targetXPath = "esb::RuleMediator::target::targetXPath";
 			// End of user code
 			
 	
@@ -2580,11 +2580,11 @@ public class EsbViewsRepository {
 			public static String referringSequenceType = "esb::Sequence::properties::referringSequenceType";
 			
 			// Start of user code for staticReferenceKey ElementEditor key
-			public static String staticReferenceKey = "esb::Sequence::properties::staticReferenceKey";
+			public static String staticReferenceKey = "esb::NamedEndpoint::properties::staticReferenceKey";
 			// End of user code
 			
 			// Start of user code for dynamicReferenceKey ElementEditor key
-			public static String dynamicReferenceKey = "esb::Sequence::properties::dynamicReferenceKey";
+			public static String dynamicReferenceKey = "esb::NamedEndpoint::properties::dynamicReferenceKey";
 			// End of user code
 			
 	
@@ -3065,7 +3065,7 @@ public class EsbViewsRepository {
 			public static String beanName = "esb::SpringMediator::properties::beanName";
 			
 			// Start of user code for configurationKey ElementEditor key
-			public static String configurationKey = "esb::SpringMediator::key::configurationKey";
+			public static String configurationKey = "esb::SmooksMediator::key::configurationKey";
 			// End of user code
 			
 	
@@ -5140,6 +5140,10 @@ public class EsbViewsRepository {
 			
 			
 			public static String connectionPassword = "esb::DBLookupMediator::connection::connectionPassword";
+			
+			// Start of user code for Database Configuration ElementEditor key
+			public static String databaseConfiguration = "esb::DBLookupMediator::connection::Database Configuration";
+			// End of user code
 			
 	
 		}
