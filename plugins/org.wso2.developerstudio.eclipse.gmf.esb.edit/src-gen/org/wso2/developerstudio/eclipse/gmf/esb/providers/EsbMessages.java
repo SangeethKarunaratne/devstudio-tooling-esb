@@ -5695,6 +5695,9 @@ public class EsbMessages extends NLS {
 	public static String DBReportMediatorPropertiesEditionPart_ConnectionUseTransactionLabel;
 
 	
+	public static String DBReportMediatorPropertiesEditionPart_DatabaseConfigurationLabel;
+
+	
 	public static String DBReportMediatorPropertiesEditionPart_SqlStatementsLabel;
 
 	
