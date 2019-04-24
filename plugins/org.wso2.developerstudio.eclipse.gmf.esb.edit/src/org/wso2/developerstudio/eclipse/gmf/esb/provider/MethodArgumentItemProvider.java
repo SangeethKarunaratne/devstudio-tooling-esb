@@ -18,6 +18,7 @@ package org.wso2.developerstudio.eclipse.gmf.esb.provider;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
@@ -28,7 +29,7 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-
+import org.wso2.developerstudio.eclipse.gmf.esb.LogProperty;
 import org.wso2.developerstudio.eclipse.gmf.esb.MethodArgument;
 import org.wso2.developerstudio.eclipse.gmf.esb.PropertyValueType;
 import org.wso2.developerstudio.eclipse.gmf.esb.presentation.EEFPropertyViewUtil;
@@ -84,25 +85,24 @@ public class MethodArgumentItemProvider extends AbstractNameValueExpressionPrope
      */
     @Override
     public String getText(Object object) {
-        String propertyName = ((MethodArgument) object).getPropertyName();
-        String propertyNameLabel = WordUtils.abbreviate(propertyName, 40, 45, " ...");
         String propertyValueType = ((MethodArgument) object).getPropertyValueType().toString();
-        String propertyValue = ((MethodArgument) object).getPropertyValue();
-        String propertyExpression = ((MethodArgument) object).getPropertyExpression().toString();
+        String propertyValue = StringUtils.rightPad(((MethodArgument) object).getPropertyValue(), 40);
+        String propertyExpression = StringUtils.rightPad(((MethodArgument) object).getPropertyExpression().toString(),
+                20);
 
-        if (propertyValueType.equalsIgnoreCase(PropertyValueType.LITERAL.getName())) {
-            return propertyName == null || propertyName.length() == 0 ? getString("_UI_MethodArgument_type")
-                    : propertyValue != null
-                            ? getString("_UI_MethodArgument_type") + "  -  "
-                                    + EEFPropertyViewUtil.spaceFormat(propertyNameLabel)
-                                    + EEFPropertyViewUtil.spaceFormat(propertyValue)
-                            : getString("_UI_MethodArgument_type") + "  -  "
-                                    + EEFPropertyViewUtil.spaceFormat(propertyNameLabel);
-        } else
-            return propertyName == null || propertyName.length() == 0 ? getString("_UI_MethodArgument_type")
-                    : getString("_UI_MethodArgument_type") + "  -  "
-                            + EEFPropertyViewUtil.spaceFormat(propertyNameLabel)
-                            + EEFPropertyViewUtil.spaceFormat(propertyExpression);
+        String formattedString = null;
+        if (((MethodArgument) object).getPropertyValue() == null
+                || ((MethodArgument) object).getPropertyValue().isEmpty()) {
+            propertyValue = StringUtils.rightPad("", 40);
+        }
+        if (propertyValueType.equals(PropertyValueType.LITERAL.getName())) {
+            formattedString = StringUtils.abbreviate((getString("_UI_MethodArgument_type") + " - "), 25)
+                    + StringUtils.abbreviate(propertyValue, 40);
+        } else {
+            formattedString = StringUtils.abbreviate((getString("_UI_MethodArgument_type") + " - "), 25)
+                    + StringUtils.abbreviate(propertyExpression, 40);
+        }
+        return formattedString;
     }
 
     /**

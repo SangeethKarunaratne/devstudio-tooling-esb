@@ -88,6 +88,7 @@ import org.wso2.developerstudio.eclipse.gmf.esb.parts.EsbViewsRepository;
 import org.wso2.developerstudio.eclipse.gmf.esb.presentation.EEFNameSpacedPropertyEditorDialog;
 import org.wso2.developerstudio.eclipse.gmf.esb.presentation.EEFPropertyViewUtil;
 import org.wso2.developerstudio.eclipse.gmf.esb.providers.EsbMessages;
+import org.wso2.developerstudio.eclipse.gmf.esb.util.SWTFontUtils;
 
 // End of user code
 
@@ -970,6 +971,7 @@ public class EJBMediatorPropertiesEditionPartForm extends SectionPropertiesEditi
 		this.methodArguments.setLayoutData(methodArgumentsData);
 		this.methodArguments.setLowerBound(0);
 		this.methodArguments.setUpperBound(-1);
+		this.methodArguments.getTable().setFont(SWTFontUtils.getMonospacedFont());
 		methodArguments.setID(EsbViewsRepository.EJBMediator.Properties.methodArguments);
 		methodArguments.setEEFType("eef::AdvancedTableComposition"); //$NON-NLS-1$
 		// Start of user code for createMethodArgumentsTableComposition
