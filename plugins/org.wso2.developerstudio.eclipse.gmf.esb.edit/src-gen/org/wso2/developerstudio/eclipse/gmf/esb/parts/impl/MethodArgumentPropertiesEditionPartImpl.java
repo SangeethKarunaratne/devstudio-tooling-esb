@@ -556,7 +556,7 @@ public class MethodArgumentPropertiesEditionPartImpl extends CompositeProperties
         EEFPropertyViewUtil eu = new EEFPropertyViewUtil(view);
         eu.clearElements(new Composite[] { propertiesGroup });
 
-        eu.showEntry(propertyNameElements, false);
+        eu.hideEntry(propertyNameElements, true);
         eu.showEntry(propertyValueTypeElements, false);
 
         if (getPropertyValueType() != null

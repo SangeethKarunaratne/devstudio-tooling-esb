@@ -18,6 +18,7 @@ package org.wso2.developerstudio.eclipse.gmf.esb.provider;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
@@ -84,25 +85,34 @@ public class MethodArgumentItemProvider extends AbstractNameValueExpressionPrope
      */
     @Override
     public String getText(Object object) {
-        String propertyName = ((MethodArgument) object).getPropertyName();
-        String propertyNameLabel = WordUtils.abbreviate(propertyName, 40, 45, " ...");
-        String propertyValueType = ((MethodArgument) object).getPropertyValueType().toString();
-        String propertyValue = ((MethodArgument) object).getPropertyValue();
-        String propertyExpression = ((MethodArgument) object).getPropertyExpression().toString();
 
-        if (propertyValueType.equalsIgnoreCase(PropertyValueType.LITERAL.getName())) {
-            return propertyName == null || propertyName.length() == 0 ? getString("_UI_MethodArgument_type")
-                    : propertyValue != null
-                            ? getString("_UI_MethodArgument_type") + "  -  "
-                                    + EEFPropertyViewUtil.spaceFormat(propertyNameLabel)
-                                    + EEFPropertyViewUtil.spaceFormat(propertyValue)
-                            : getString("_UI_MethodArgument_type") + "  -  "
-                                    + EEFPropertyViewUtil.spaceFormat(propertyNameLabel);
-        } else
-            return propertyName == null || propertyName.length() == 0 ? getString("_UI_MethodArgument_type")
-                    : getString("_UI_MethodArgument_type") + "  -  "
-                            + EEFPropertyViewUtil.spaceFormat(propertyNameLabel)
-                            + EEFPropertyViewUtil.spaceFormat(propertyExpression);
+        int maxLength = 40;
+        int spacing = 5;
+        int marginSpaceLeft = 1;
+        int propertyTypeLength = 10;
+        String emptySpace = StringUtils.rightPad("", spacing);
+
+        String propertyValueType = ((MethodArgument) object).getPropertyValueType().toString();
+        String propertyValue = StringUtils.rightPad(((MethodArgument) object).getPropertyValue(), maxLength);
+        String propertyExpression = StringUtils.rightPad(((MethodArgument) object).getPropertyExpression().toString(),
+                maxLength);
+
+        String formattedString = null;
+
+        if (((MethodArgument) object).getPropertyValue() == null
+                || ((MethodArgument) object).getPropertyValue().isEmpty()) {
+            propertyValue = StringUtils.rightPad("", maxLength);
+        }
+        if (propertyValueType.equals(PropertyValueType.LITERAL.getName())) {
+            formattedString = StringUtils.rightPad("", marginSpaceLeft) + StringUtils
+                    .abbreviate(StringUtils.rightPad(propertyValueType, propertyTypeLength), propertyTypeLength)
+                    + emptySpace + StringUtils.abbreviate(propertyValue, maxLength);
+        } else {
+            formattedString = StringUtils.rightPad("", marginSpaceLeft) + StringUtils
+                    .abbreviate(StringUtils.rightPad(propertyValueType, propertyTypeLength), propertyTypeLength)
+                    + emptySpace + StringUtils.abbreviate(propertyExpression, maxLength);
+        }
+        return formattedString;
     }
 
     /**
