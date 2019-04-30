@@ -72,6 +72,7 @@ import org.wso2.developerstudio.eclipse.gmf.esb.parts.EsbViewsRepository;
 import org.wso2.developerstudio.eclipse.gmf.esb.parts.PublishEventMediatorPropertiesEditionPart;
 import org.wso2.developerstudio.eclipse.gmf.esb.presentation.EEFPropertyViewUtil;
 import org.wso2.developerstudio.eclipse.gmf.esb.providers.EsbMessages;
+import org.wso2.developerstudio.eclipse.gmf.esb.util.FontUtils;
 
 // End of user code
 
@@ -620,6 +621,7 @@ public class PublishEventMediatorPropertiesEditionPartForm extends SectionProper
 		this.metaAttributes.setLayoutData(metaAttributesData);
 		this.metaAttributes.setLowerBound(0);
 		this.metaAttributes.setUpperBound(-1);
+		this.metaAttributes.getTable().setFont(FontUtils.getMonospacedFont());
 		metaAttributes.setID(EsbViewsRepository.PublishEventMediator.Properties.metaAttributes);
 		metaAttributes.setEEFType("eef::AdvancedTableComposition"); //$NON-NLS-1$
 		// Start of user code for createMetaAttributesTableComposition
@@ -673,6 +675,7 @@ public class PublishEventMediatorPropertiesEditionPartForm extends SectionProper
 		this.correlationAttributes.setLayoutData(correlationAttributesData);
 		this.correlationAttributes.setLowerBound(0);
 		this.correlationAttributes.setUpperBound(-1);
+		this.correlationAttributes.getTable().setFont(FontUtils.getMonospacedFont());
 		correlationAttributes.setID(EsbViewsRepository.PublishEventMediator.Properties.correlationAttributes);
 		correlationAttributes.setEEFType("eef::AdvancedTableComposition"); //$NON-NLS-1$
 		// Start of user code for createCorrelationAttributesTableComposition
@@ -726,6 +729,7 @@ public class PublishEventMediatorPropertiesEditionPartForm extends SectionProper
 		this.payloadAttributes.setLayoutData(payloadAttributesData);
 		this.payloadAttributes.setLowerBound(0);
 		this.payloadAttributes.setUpperBound(-1);
+		this.payloadAttributes.getTable().setFont(FontUtils.getMonospacedFont());
 		payloadAttributes.setID(EsbViewsRepository.PublishEventMediator.Properties.payloadAttributes);
 		payloadAttributes.setEEFType("eef::AdvancedTableComposition"); //$NON-NLS-1$
 		// Start of user code for createPayloadAttributesTableComposition
@@ -779,6 +783,7 @@ public class PublishEventMediatorPropertiesEditionPartForm extends SectionProper
 		this.arbitraryAttributes.setLayoutData(arbitraryAttributesData);
 		this.arbitraryAttributes.setLowerBound(0);
 		this.arbitraryAttributes.setUpperBound(-1);
+		this.arbitraryAttributes.getTable().setFont(FontUtils.getMonospacedFont());
 		arbitraryAttributes.setID(EsbViewsRepository.PublishEventMediator.Properties.arbitraryAttributes);
 		arbitraryAttributes.setEEFType("eef::AdvancedTableComposition"); //$NON-NLS-1$
 		// Start of user code for createArbitraryAttributesTableComposition

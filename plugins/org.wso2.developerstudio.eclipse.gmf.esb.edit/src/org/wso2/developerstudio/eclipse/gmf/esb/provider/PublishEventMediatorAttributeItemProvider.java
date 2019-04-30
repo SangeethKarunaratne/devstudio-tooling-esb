@@ -18,6 +18,7 @@ package org.wso2.developerstudio.eclipse.gmf.esb.provider;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
@@ -107,27 +108,59 @@ public class PublishEventMediatorAttributeItemProvider extends AbstractNameValue
      */
     @Override
     public String getText(Object object) {
-        String propertyName = ((PublishEventMediatorAttribute) object).getAttributeName();
-        String propertyNameLabel = WordUtils.abbreviate(propertyName, 40, 45, " ...");
-        String propertyValueType = ((PublishEventMediatorAttribute) object).getAttributeValueType().toString();
-        String propertyValue = ((PublishEventMediatorAttribute) object).getAttributeValue();
-        String propertyExpression = ((PublishEventMediatorAttribute) object).getAttributeExpression().toString();
+        int maxLength = 35;
+        int spacing = 3;
+        int marginSpaceLeft = 1;
+        int attributeTypeLength = 10;
+        String emptySpace = StringUtils.rightPad("", spacing);
 
-        if (propertyValueType.equalsIgnoreCase(AttributeValueType.VALUE.getName())) {
-            return propertyName == null || propertyName.length() == 0
-                    ? getString("_UI_PublishEventMediatorAttribute_type")
-                    : propertyValue != null
-                            ? getString("_UI_PublishEventMediatorAttribute_type") + "  -  "
-                                    + EEFPropertyViewUtil.spaceFormat(propertyNameLabel)
-                                    + EEFPropertyViewUtil.spaceFormat(propertyValue)
-                            : EEFPropertyViewUtil.spaceFormat(getString("_UI_PublishEventMediatorAttribute_type"))
-                                    + EEFPropertyViewUtil.spaceFormat(propertyNameLabel);
-        } else
-            return propertyName == null || propertyName.length() == 0
-                    ? getString("_UI_PublishEventMediatorAttribute_type")
-                    : getString("_UI_PublishEventMediatorAttribute_type") + "  -  "
-                            + EEFPropertyViewUtil.spaceFormat(propertyNameLabel)
-                            + EEFPropertyViewUtil.spaceFormat(propertyExpression);
+        String attributeName = StringUtils.rightPad(((PublishEventMediatorAttribute) object).getAttributeName(),
+                maxLength);
+        String attributeValueType = ((PublishEventMediatorAttribute) object).getAttributeValueType().toString();
+        String attributeType = StringUtils
+                .rightPad(((PublishEventMediatorAttribute) object).getAttributeType().toString(), attributeTypeLength);
+
+        String attributeValue = StringUtils.rightPad(((PublishEventMediatorAttribute) object).getAttributeValue(),
+                maxLength);
+        String attributeDefaultValue = StringUtils.rightPad(((PublishEventMediatorAttribute) object).getDefaultValue(),
+                maxLength);
+
+        String attributeExpression = StringUtils
+                .rightPad(((PublishEventMediatorAttribute) object).getAttributeExpression().toString(), maxLength);
+
+        String formattedString = null;
+        if (((PublishEventMediatorAttribute) object).getAttributeName() == null
+                || ((PublishEventMediatorAttribute) object).getAttributeName().isEmpty()) {
+            attributeName = StringUtils.rightPad("", maxLength);
+        }
+        if (((PublishEventMediatorAttribute) object).getAttributeValue() == null
+                || ((PublishEventMediatorAttribute) object).getAttributeValue().isEmpty()) {
+            attributeValue = StringUtils.rightPad("", maxLength);
+        }
+
+        if (AttributeValueType.VALUE.getName().equals(attributeValueType)) {
+            formattedString = StringUtils.rightPad("", marginSpaceLeft)
+                    + StringUtils.abbreviate(attributeName, maxLength) + emptySpace
+                    + StringUtils.abbreviate(
+                            StringUtils.rightPad(attributeValueType, attributeTypeLength), attributeTypeLength)
+                    + emptySpace
+                    + StringUtils.abbreviate(StringUtils.rightPad(attributeType, attributeTypeLength),
+                            attributeTypeLength)
+                    + StringUtils.abbreviate(StringUtils.rightPad(attributeValue, maxLength), maxLength) + emptySpace
+                    + StringUtils.abbreviate(StringUtils.rightPad(attributeDefaultValue, maxLength), maxLength);
+        } else {
+            formattedString = StringUtils.rightPad("", marginSpaceLeft)
+                    + StringUtils.abbreviate(attributeName, maxLength) + emptySpace
+                    + StringUtils.abbreviate(
+                            StringUtils.rightPad(attributeValueType, attributeTypeLength), attributeTypeLength)
+                    + emptySpace
+                    + StringUtils.abbreviate(StringUtils.rightPad(attributeType, attributeTypeLength),
+                            attributeTypeLength)
+                    + StringUtils.abbreviate(StringUtils.rightPad(attributeValue, maxLength), maxLength) + emptySpace
+                    + StringUtils.abbreviate(StringUtils.rightPad(attributeExpression, maxLength), maxLength);
+        }
+        return formattedString;
+
     }
 
     /**
