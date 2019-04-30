@@ -75,6 +75,7 @@ import org.wso2.developerstudio.eclipse.gmf.esb.parts.CallTemplateMediatorProper
 import org.wso2.developerstudio.eclipse.gmf.esb.parts.EsbViewsRepository;
 import org.wso2.developerstudio.eclipse.gmf.esb.presentation.EEFPropertyViewUtil;
 import org.wso2.developerstudio.eclipse.gmf.esb.providers.EsbMessages;
+import org.wso2.developerstudio.eclipse.gmf.esb.util.FontUtils;
 
 // End of user code
 
@@ -428,6 +429,7 @@ public class CallTemplateMediatorPropertiesEditionPartForm extends SectionProper
 		this.templateParameters.setLayoutData(templateParametersData);
 		this.templateParameters.setLowerBound(0);
 		this.templateParameters.setUpperBound(-1);
+        this.templateParameters.getTable().setFont(FontUtils.getMonospacedFont());
 		templateParameters.setID(EsbViewsRepository.CallTemplateMediator.Properties.templateParameters);
 		templateParameters.setEEFType("eef::AdvancedTableComposition"); //$NON-NLS-1$
 		// Start of user code for createTemplateParametersTableComposition

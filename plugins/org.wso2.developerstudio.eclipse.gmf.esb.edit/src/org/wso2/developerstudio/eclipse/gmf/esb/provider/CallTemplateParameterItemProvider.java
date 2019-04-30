@@ -9,6 +9,7 @@ package org.wso2.developerstudio.eclipse.gmf.esb.provider;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
@@ -182,31 +183,40 @@ public class CallTemplateParameterItemProvider extends EsbNodeItemProvider {
      */
     @Override
     public String getText(Object object) {
-        String parameterName = ((CallTemplateParameter) object).getParameterName();
-        String parameterNameLabel = WordUtils.abbreviate(parameterName, 40, 45, " ...");
-        String parameterType = ((CallTemplateParameter) object).getTemplateParameterType().toString();
-        String parameterValue = ((CallTemplateParameter) object).getParameterValue();
-        String parameterExpression = ((CallTemplateParameter) object).getParameterExpression().toString();
 
-        if (parameterType.equalsIgnoreCase(RuleOptionType.VALUE.getName())) {
-            if (parameterValue != null) {
-                return parameterName == null || parameterName.length() == 0
-                        ? getString("_UI_CallTemplateParameter_type")
-                        : getString("_UI_CallTemplateParameter_type") + "  -  "
-                                + EEFPropertyViewUtil.spaceFormat(parameterNameLabel)
-                                + EEFPropertyViewUtil.spaceFormat(parameterValue);
-            } else {
-                return parameterName == null || parameterName.length() == 0
-                        ? getString("_UI_CallTemplateParameter_type")
-                        : getString("_UI_CallTemplateParameter_type") + "  -  "
-                                + EEFPropertyViewUtil.spaceFormat(parameterNameLabel);
-            }
-        } else {
-            return parameterName == null || parameterName.length() == 0 ? getString("_UI_CallTemplateParameter_type")
-                    : getString("_UI_CallTemplateParameter_type") + "  -  "
-                            + EEFPropertyViewUtil.spaceFormat(parameterNameLabel)
-                            + EEFPropertyViewUtil.spaceFormat(parameterExpression);
+        int maxLength = 40;
+        int spacing = 3;
+        int marginSpaceLeft = 1;
+        int propertyTypeLength = 10;
+        String emptySpace = StringUtils.rightPad("", spacing);
+
+        String parameterName = StringUtils.rightPad(((CallTemplateParameter) object).getParameterName(), maxLength);
+        String parameterType = ((CallTemplateParameter) object).getTemplateParameterType().toString();
+        String parameterValue = StringUtils.rightPad(((CallTemplateParameter) object).getParameterValue(), maxLength);
+        String parameterExpression = StringUtils
+                .rightPad(((CallTemplateParameter) object).getParameterExpression().toString(), maxLength);
+
+        String formattedString = null;
+        if (((CallTemplateParameter) object).getParameterName() == null
+                || ((CallTemplateParameter) object).getParameterName().isEmpty()) {
+            parameterName = StringUtils.rightPad("", maxLength);
         }
+        if (((CallTemplateParameter) object).getParameterValue() == null
+                || ((CallTemplateParameter) object).getParameterValue().isEmpty()) {
+            parameterValue = StringUtils.rightPad("", maxLength);
+        }
+        if (RuleOptionType.VALUE.getName().equalsIgnoreCase(parameterType)) {
+            formattedString = StringUtils.rightPad("", marginSpaceLeft)
+                    + StringUtils.abbreviate(parameterName, maxLength) + emptySpace + StringUtils
+                            .abbreviate(StringUtils.rightPad(parameterType, propertyTypeLength), propertyTypeLength)
+                    + emptySpace + StringUtils.abbreviate(parameterValue, maxLength);
+        } else {
+            formattedString = StringUtils.rightPad("", marginSpaceLeft)
+                    + StringUtils.abbreviate(parameterName, maxLength) + emptySpace + StringUtils
+                            .abbreviate(StringUtils.rightPad(parameterType, propertyTypeLength), propertyTypeLength)
+                    + emptySpace + StringUtils.abbreviate(parameterExpression, maxLength);
+        }
+        return formattedString;
     }
 
     /**
