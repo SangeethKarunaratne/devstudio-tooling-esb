@@ -9,6 +9,7 @@ package org.wso2.developerstudio.eclipse.gmf.esb.provider;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 
@@ -75,10 +76,24 @@ public class ValidateFeatureItemProvider extends AbstractBooleanFeatureItemProvi
 
     @Override
     public String getText(Object object) {
-        String label = ((ValidateFeature)object).getFeatureName();
-        return label == null || label.length() == 0 ?
-            getString("_UI_ValidateFeature_type") :
-            getString("_UI_ValidateFeature_type") + " " + label;
+        int maxLength = 16;
+        int spacing = 3;
+        int marginSpaceLeft = 1;
+        String emptySpace = StringUtils.rightPad("", spacing);
+
+        String label = getString("_UI_ValidateFeature_type");
+        String propertyName = ((ValidateFeature) object).getFeatureName();
+
+        String formattedString = null;
+        if (((ValidateFeature) object).getFeatureName() == null
+                || ((ValidateFeature) object).getFeatureName().isEmpty()) {
+            propertyName = StringUtils.rightPad("", maxLength);
+        }
+
+        formattedString = StringUtils.rightPad("", marginSpaceLeft) + label + emptySpace
+                + StringUtils.abbreviate(propertyName, maxLength);
+
+        return formattedString;
     }
 
     /**

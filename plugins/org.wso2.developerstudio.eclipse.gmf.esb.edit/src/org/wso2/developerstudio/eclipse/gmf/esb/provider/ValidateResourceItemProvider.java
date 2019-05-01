@@ -18,6 +18,7 @@ package org.wso2.developerstudio.eclipse.gmf.esb.provider;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 
@@ -27,7 +28,6 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-
 import org.wso2.developerstudio.eclipse.gmf.esb.ValidateResource;
 
 /**
@@ -81,10 +81,28 @@ public class ValidateResourceItemProvider extends AbstractLocationKeyResourceIte
      */
     @Override
     public String getText(Object object) {
-        String label = ((ValidateResource)object).getLocation();
-        return label == null || label.length() == 0 ?
-            getString("_UI_ValidateResource_type") :
-            getString("_UI_ValidateResource_type") + " " + label;
+        int maxLength = 40;
+        int spacing = 5;
+        int marginSpaceLeft = 1;
+        String emptySpace = StringUtils.rightPad("", spacing);
+
+        String resourceLocation = StringUtils.rightPad(((ValidateResource) object).getLocation(), maxLength);
+        String resourceKey = StringUtils.rightPad(((ValidateResource) object).getKey().getKeyValue(), maxLength);
+
+        String formattedString = null;
+        if (((ValidateResource) object).getLocation() == null || ((ValidateResource) object).getLocation().isEmpty()) {
+            resourceLocation = StringUtils.rightPad("", maxLength);
+        }
+        if (((ValidateResource) object).getKey().getKeyValue() == null
+                || ((ValidateResource) object).getKey().getKeyValue().isEmpty()) {
+            resourceKey = StringUtils.rightPad("", maxLength);
+        }
+
+        formattedString = StringUtils.rightPad("", marginSpaceLeft)
+                + StringUtils.abbreviate(resourceLocation, maxLength) + emptySpace
+                + StringUtils.abbreviate(resourceKey, maxLength);
+
+        return formattedString;
     }
 
     /**

@@ -9,6 +9,7 @@ package org.wso2.developerstudio.eclipse.gmf.esb.provider;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 
@@ -176,20 +177,37 @@ public class ValidateSchemaItemProvider extends EsbNodeItemProvider {
 
     @Override
     public String getText(Object object) {
-        KeyType keyType = ((ValidateSchema) object).getValidateSchemaKeyType();
-        String keyTypeLabel = keyType == null ? null : keyType.toString();
-        String staticKeyValue = ((ValidateSchema) object).getValidateStaticSchemaKey().toString();
-        String dynamicKeyValue = ((ValidateSchema) object).getValidateDynamicSchemaKey().toString();
+        int maxLength = 40;
+        int spacing = 2;
+        int marginSpaceLeft = 1;
+        int propertyTypeLength = 8;
+        String emptySpace = StringUtils.rightPad("", spacing);
 
-        if (keyTypeLabel.equalsIgnoreCase(KeyType.STATIC.getName())) {
-            return keyTypeLabel == null || keyTypeLabel.length() == 0 ? getString("_UI_ValidateSchema_type")
-                    : getString("_UI_ValidateSchema_type") + "  -  " + EEFPropertyViewUtil.spaceFormat(keyTypeLabel)
-                            + EEFPropertyViewUtil.spaceFormat(staticKeyValue);
-        } else {
-            return keyTypeLabel == null || keyTypeLabel.length() == 0 ? getString("_UI_ValidateSchema_type")
-                    : getString("_UI_ValidateSchema_type") + "  -  " + EEFPropertyViewUtil.spaceFormat(keyTypeLabel)
-                            + EEFPropertyViewUtil.spaceFormat(dynamicKeyValue);
+        String schemaKeyType = ((ValidateSchema) object).getValidateSchemaKeyType().toString();
+        String staticSchemaKey = StringUtils
+                .rightPad(((ValidateSchema) object).getValidateStaticSchemaKey().toString(), maxLength);
+        String dynamicSchemaKey = StringUtils
+                .rightPad(((ValidateSchema) object).getValidateDynamicSchemaKey().toString(), maxLength);
+
+        String formattedString = null;
+        if (((ValidateSchema) object).getValidateStaticSchemaKey().toString() == null
+                || ((ValidateSchema) object).getValidateStaticSchemaKey().toString().isEmpty()) {
+            staticSchemaKey = StringUtils.rightPad("", maxLength);
         }
+        if (((ValidateSchema) object).getValidateDynamicSchemaKey().toString() == null
+                || ((ValidateSchema) object).getValidateDynamicSchemaKey().toString().isEmpty()) {
+            dynamicSchemaKey = StringUtils.rightPad("", maxLength);
+        }
+        if (KeyType.STATIC.getName().equalsIgnoreCase(schemaKeyType)) {
+            formattedString = StringUtils.rightPad("", marginSpaceLeft) + StringUtils
+                    .abbreviate(StringUtils.rightPad(schemaKeyType, propertyTypeLength), propertyTypeLength)
+                    + emptySpace + StringUtils.abbreviate(staticSchemaKey, maxLength);
+        } else {
+            formattedString = StringUtils.rightPad("", marginSpaceLeft) + StringUtils
+                    .abbreviate(StringUtils.rightPad(schemaKeyType, propertyTypeLength), propertyTypeLength)
+                    + emptySpace + StringUtils.abbreviate(dynamicSchemaKey, maxLength);
+        }
+        return formattedString;
     }
 
     /**

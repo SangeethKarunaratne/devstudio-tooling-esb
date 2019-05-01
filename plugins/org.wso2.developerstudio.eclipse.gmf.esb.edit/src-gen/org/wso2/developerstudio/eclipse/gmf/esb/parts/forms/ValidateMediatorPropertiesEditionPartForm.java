@@ -78,6 +78,7 @@ import org.wso2.developerstudio.eclipse.gmf.esb.parts.ValidateMediatorProperties
 import org.wso2.developerstudio.eclipse.gmf.esb.presentation.EEFNameSpacedPropertyEditorDialog;
 import org.wso2.developerstudio.eclipse.gmf.esb.presentation.EEFPropertyViewUtil;
 import org.wso2.developerstudio.eclipse.gmf.esb.providers.EsbMessages;
+import org.wso2.developerstudio.eclipse.gmf.esb.util.FontUtils;
 
 // End of user code
 
@@ -422,6 +423,7 @@ public class ValidateMediatorPropertiesEditionPartForm extends SectionProperties
 		this.features.setLayoutData(featuresData);
 		this.features.setLowerBound(0);
 		this.features.setUpperBound(-1);
+		this.features.getTable().setFont(FontUtils.getMonospacedFont());
 		features.setID(EsbViewsRepository.ValidateMediator.Properties.features);
 		features.setEEFType("eef::AdvancedTableComposition"); //$NON-NLS-1$
 		// Start of user code for createFeaturesTableComposition
@@ -477,6 +479,7 @@ public class ValidateMediatorPropertiesEditionPartForm extends SectionProperties
 		this.schemas.setLayoutData(schemasData);
 		this.schemas.setLowerBound(0);
 		this.schemas.setUpperBound(-1);
+		this.schemas.getTable().setFont(FontUtils.getMonospacedFont());
 		schemas.setID(EsbViewsRepository.ValidateMediator.Properties.schemas);
 		schemas.setEEFType("eef::AdvancedTableComposition"); //$NON-NLS-1$
 		// Start of user code for createSchemasTableComposition
@@ -532,6 +535,7 @@ public class ValidateMediatorPropertiesEditionPartForm extends SectionProperties
 		this.resources.setLayoutData(resourcesData);
 		this.resources.setLowerBound(0);
 		this.resources.setUpperBound(-1);
+		this.resources.getTable().setFont(FontUtils.getMonospacedFont());
 		resources.setID(EsbViewsRepository.ValidateMediator.Properties.resources);
 		resources.setEEFType("eef::AdvancedTableComposition"); //$NON-NLS-1$
 		// Start of user code for createResourcesTableComposition
