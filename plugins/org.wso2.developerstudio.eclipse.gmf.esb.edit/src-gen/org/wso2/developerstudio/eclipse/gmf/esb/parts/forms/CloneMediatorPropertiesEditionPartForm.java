@@ -71,6 +71,7 @@ import org.wso2.developerstudio.eclipse.gmf.esb.parts.CloneMediatorPropertiesEdi
 import org.wso2.developerstudio.eclipse.gmf.esb.parts.EsbViewsRepository;
 import org.wso2.developerstudio.eclipse.gmf.esb.presentation.EEFPropertyViewUtil;
 import org.wso2.developerstudio.eclipse.gmf.esb.providers.EsbMessages;
+import org.wso2.developerstudio.eclipse.gmf.esb.util.FontUtils;
 
 // End of user code
 
@@ -589,6 +590,7 @@ public class CloneMediatorPropertiesEditionPartForm extends SectionPropertiesEdi
         this.targets.setLayoutData(targetsData);
         this.targets.setLowerBound(0);
         this.targets.setUpperBound(-1);
+        this.targets.getTable().setFont(FontUtils.getMonospacedFont());
         targets.setID(EsbViewsRepository.CloneMediator.Properties.targets);
         targets.setEEFType("eef::AdvancedTableComposition"); //$NON-NLS-1$
         // Start of user code for createTargetsTableComposition

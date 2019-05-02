@@ -9,6 +9,7 @@ package org.wso2.developerstudio.eclipse.gmf.esb.provider;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 
@@ -123,11 +124,48 @@ public class CloneTargetItemProvider extends AbstractCommonTargetItemProvider {
      */
     @Override
     public String getText(Object object) {
-        TargetSequenceType labelValue = ((CloneTarget)object).getSequenceType();
-        String label = labelValue == null ? null : labelValue.toString();
-        return label == null || label.length() == 0 ?
-            getString("_UI_CloneTarget_type") :
-            getString("_UI_CloneTarget_type") + " " + label;
+        int maxLength = 30;
+        int spacing = 3;
+        int marginSpaceLeft = 1;
+        String emptySpace = StringUtils.rightPad("", spacing);
+
+        String soapAction = null;
+        String toAddress = null;
+        String endPointRegistryKey = null;
+        String sequenceRegistryKey = null;
+        String formattedString = null;
+
+        if (((CloneTarget) object).getEndpointKey() == null
+                || ((CloneTarget) object).getEndpointKey().getKeyValue().isEmpty()) {
+            endPointRegistryKey = StringUtils.rightPad("", maxLength);
+        } else {
+            endPointRegistryKey = StringUtils.rightPad(((CloneTarget) object).getEndpointKey().getKeyValue(),
+                    maxLength);
+        }
+        if (((CloneTarget) object).getSequenceKey() == null
+                || ((CloneTarget) object).getSequenceKey().getKeyValue().isEmpty()) {
+            sequenceRegistryKey = StringUtils.rightPad("", maxLength);
+        } else {
+            sequenceRegistryKey = StringUtils.rightPad(((CloneTarget) object).getSequenceKey().getKeyValue(),
+                    maxLength);
+        }
+        if (((CloneTarget) object).getSoapAction() == null || ((CloneTarget) object).getSoapAction().isEmpty()) {
+            soapAction = StringUtils.rightPad("", maxLength);
+        } else {
+            soapAction = StringUtils.rightPad(((CloneTarget) object).getSoapAction(), maxLength);
+        }
+        if (((CloneTarget) object).getToAddress() == null || ((CloneTarget) object).getToAddress().isEmpty()) {
+            toAddress = StringUtils.rightPad("", maxLength);
+        } else {
+            toAddress = StringUtils.rightPad(((CloneTarget) object).getToAddress(), maxLength);
+        }
+
+        formattedString = StringUtils.rightPad("", marginSpaceLeft) + StringUtils.abbreviate(soapAction, maxLength)
+                + emptySpace + StringUtils.abbreviate(toAddress, maxLength) + emptySpace
+                + StringUtils.abbreviate(endPointRegistryKey, maxLength) + emptySpace
+                + StringUtils.abbreviate(sequenceRegistryKey, maxLength);
+
+        return formattedString;
     }
 
     /**
