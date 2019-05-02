@@ -90,6 +90,7 @@ import org.wso2.developerstudio.eclipse.gmf.esb.presentation.EEFNameSpacedProper
 import org.wso2.developerstudio.eclipse.gmf.esb.presentation.EEFPropertyViewUtil;
 import org.wso2.developerstudio.eclipse.gmf.esb.presentation.EEFRegistryKeyPropertyEditorDialog;
 import org.wso2.developerstudio.eclipse.gmf.esb.providers.EsbMessages;
+import org.wso2.developerstudio.eclipse.gmf.esb.util.FontUtils;
 import org.wso2.developerstudio.esb.form.editors.article.providers.NamedEntityDescriptor;
 
 // End of user code
@@ -685,6 +686,7 @@ public class ScriptMediatorPropertiesEditionPartForm extends SectionPropertiesEd
 		this.scriptKeys.setLayoutData(scriptKeysData);
 		this.scriptKeys.setLowerBound(0);
 		this.scriptKeys.setUpperBound(-1);
+		this.scriptKeys.getTable().setFont(FontUtils.getMonospacedFont());
 		scriptKeys.setID(EsbViewsRepository.ScriptMediator.Properties.scriptKeys);
 		scriptKeys.setEEFType("eef::AdvancedTableComposition"); //$NON-NLS-1$
 		// Start of user code for createScriptKeysTableComposition

@@ -9,6 +9,7 @@ package org.wso2.developerstudio.eclipse.gmf.esb.provider;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
@@ -178,15 +179,28 @@ public class RegistryKeyPropertyItemProvider extends ItemProviderAdapter impleme
 
     @Override
     public String getText(Object object) {
-        String keyValue = "";
-        RegistryKeyProperty property = (RegistryKeyProperty) object;
-        String keyName = property.getKeyName();
-        String keyNameLabel = WordUtils.abbreviate(keyName, 40, 45, " ...");
+        int maxLength = 40;
+        int spacing = 5;
+        int marginSpaceLeft = 1;
+        String emptySpace = StringUtils.rightPad("", spacing);
 
-        if (null != property) {
-            keyValue = property.getKeyValue();
+        String keyName = StringUtils.rightPad(((RegistryKeyProperty) object).getKeyName(), maxLength);
+        String keyValue = StringUtils.rightPad(((RegistryKeyProperty) object).getKeyValue(), maxLength);
+
+        String formattedString = null;
+        if (((RegistryKeyProperty) object).getKeyName() == null
+                || ((RegistryKeyProperty) object).getKeyName().isEmpty()) {
+            keyName = StringUtils.rightPad("", maxLength);
         }
-        return EEFPropertyViewUtil.spaceFormat(keyNameLabel) + EEFPropertyViewUtil.spaceFormat(keyValue);
+        if (((RegistryKeyProperty) object).getKeyValue() == null
+                || ((RegistryKeyProperty) object).getKeyValue().isEmpty()) {
+            keyValue = StringUtils.rightPad("", maxLength);
+        }
+
+        formattedString = StringUtils.rightPad("", marginSpaceLeft) + StringUtils.abbreviate(keyName, maxLength)
+                + emptySpace + StringUtils.abbreviate(keyValue, maxLength);
+
+        return formattedString;
     }
 
     /**
