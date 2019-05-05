@@ -70,7 +70,7 @@ public class LogPropertyItemProvider extends AbstractNameValueExpressionProperty
 
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/LogProperty"));
+        return null;
     }
 
     /**
@@ -83,10 +83,10 @@ public class LogPropertyItemProvider extends AbstractNameValueExpressionProperty
     @Override
     public String getText(Object object) {
 
-        int maxLength = 40;
-        int spacing = 5;
+        int maxLength = 41;
+        int spacing = 3;
         int marginSpaceLeft = 1;
-        int propertyTypeLength = 10;
+        int propertyTypeLength = 23;
         String emptySpace = StringUtils.rightPad("", spacing);
 
         String propertyName = StringUtils.rightPad(((LogProperty) object).getPropertyName(), maxLength);

@@ -35,9 +35,6 @@ import org.eclipse.emf.eef.runtime.ui.utils.EditingUtils;
 
 import org.eclipse.emf.eef.runtime.ui.widgets.EMFComboViewer;
 import org.eclipse.emf.eef.runtime.ui.widgets.FormUtils;
-import org.eclipse.emf.eef.runtime.ui.widgets.ReferencesTable;
-
-import org.eclipse.emf.eef.runtime.ui.widgets.ReferencesTable.ReferencesTableListener;
 
 import org.eclipse.emf.eef.runtime.ui.widgets.referencestable.ReferencesTableContentProvider;
 import org.eclipse.emf.eef.runtime.ui.widgets.referencestable.ReferencesTableSettings;
@@ -60,7 +57,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Text;
 
 import org.eclipse.ui.forms.widgets.Form;
@@ -69,7 +65,7 @@ import org.eclipse.ui.forms.widgets.Section;
 
 import org.wso2.developerstudio.eclipse.gmf.esb.parts.EsbViewsRepository;
 import org.wso2.developerstudio.eclipse.gmf.esb.parts.LogMediatorPropertiesEditionPart;
-
+import org.wso2.developerstudio.eclipse.gmf.esb.parts.forms.ReferencesTable1.ReferencesTableListener1;
 import org.wso2.developerstudio.eclipse.gmf.esb.providers.EsbMessages;
 import org.wso2.developerstudio.eclipse.gmf.esb.util.FontUtils;
 
@@ -84,7 +80,7 @@ public class LogMediatorPropertiesEditionPartForm extends SectionPropertiesEditi
 	protected EMFComboViewer logCategory;
 	protected EMFComboViewer logLevel;
 	protected Text logSeparator;
-	protected ReferencesTable properties;
+	protected ReferencesTable1 properties;
 	protected List<ViewerFilter> propertiesBusinessFilters = new ArrayList<ViewerFilter>();
 	protected List<ViewerFilter> propertiesFilters = new ArrayList<ViewerFilter>();
 	protected Text description;
@@ -318,7 +314,17 @@ public class LogMediatorPropertiesEditionPartForm extends SectionPropertiesEditi
 	 * 
 	 */
 	protected Composite createPropertiesTableComposition(FormToolkit widgetFactory, Composite parent) {
-		this.properties = new ReferencesTable(getDescription(EsbViewsRepository.LogMediator.Properties.properties_, EsbMessages.LogMediatorPropertiesEditionPart_PropertiesLabel), new ReferencesTableListener() {
+	    String marginSpace = StringUtils.rightPad("", 1);
+	    String emptySpace = StringUtils.rightPad("", 2);
+	    String title = marginSpace
+	            + StringUtils.rightPad("Property Name", 40)
+	            + marginSpace + "|"
+                + emptySpace + StringUtils.rightPad( "Property Value Type", 22)
+                + marginSpace + "|"
+                + emptySpace + StringUtils.rightPad( "Property Value", 40)
+                + marginSpace + "|";
+
+		this.properties = new ReferencesTable1(getDescription(EsbViewsRepository.LogMediator.Properties.properties_, EsbMessages.LogMediatorPropertiesEditionPart_PropertiesLabel),title, new ReferencesTableListener1() {
 			public void handleAdd() {
 				propertiesEditionComponent.firePropertiesChanged(new PropertiesEditionEvent(LogMediatorPropertiesEditionPartForm.this, EsbViewsRepository.LogMediator.Properties.properties_, PropertiesEditionEvent.COMMIT, PropertiesEditionEvent.ADD, null, null));
 				properties.refresh();
@@ -356,20 +362,7 @@ public class LogMediatorPropertiesEditionPartForm extends SectionPropertiesEditi
 		this.properties.setLayoutData(propertiesData);
 		this.properties.setLowerBound(0);
 		this.properties.setUpperBound(-1);
-
-		//TODO: fix column header wrapping issue in mac and windows.  
-		/*String emptySpace = StringUtils.rightPad("", 2);
-		{
-		    this.properties.getTable().setHeaderVisible(true);
-		    String title = StringUtils.rightPad(emptySpace + "Property Name", 42) + "|"
-		            + StringUtils.rightPad(emptySpace + "Property Value Type", 20) + emptySpace + "|"
-		            + StringUtils.rightPad(emptySpace + "Property Value", 42) + "|";
-
-		    TableColumn column = new TableColumn(this.properties.getTable(), SWT.NONE);
-		    column.setText(title);
-		    this.properties.getTable().getColumn(0).pack();
-		}*/
-
+		this.properties.getTable().setFont(FontUtils.getMonospacedFont());
 		this.properties.getTable().setFont(FontUtils.getMonospacedFont());
 		properties.setID(EsbViewsRepository.LogMediator.Properties.properties_);
 		properties.setEEFType("eef::AdvancedTableComposition"); //$NON-NLS-1$
